@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS'  // Asegura que Jenkins use Node.js
+    }
+    environment {
+        IMAGE_NAME = 'node-jenkins-app'
+        CONTAINER_PORT = '3000'
+        HOST_PORT = '3000'
+    }
     stages {
         stage('Clonar Código') {
             steps {
@@ -18,12 +26,12 @@ pipeline {
         }
         stage('Construir Imagen Docker') {
             steps {
-                sh 'docker build -t node-jenkins-app .'
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
         stage('Ejecutar Contenedor') {
             steps {
-                sh 'docker run -d -p 3000:3000 node-jenkins-app'
+                sh 'docker run --rm -d -p $HOST_PORT:$CONTAINER_PORT --name $IMAGE_NAME $IMAGE_NAME'
             }
         }
     }

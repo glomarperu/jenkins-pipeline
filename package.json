@@ -5,10 +5,10 @@
     "main": "server.js",
     "scripts": {
       "start": "node server.js",
-      "test": "echo \"No hay pruebas definidas\" && exit 0"
+      "test": "echo \"No hay pruebas definidas\" && exit 0",
+      "build": "echo \"No hay proceso de build definido\""
     },
     "dependencies": {
       "express": "^4.18.2"
     }
-  }
-  
+}
