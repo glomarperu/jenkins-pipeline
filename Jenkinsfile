@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clonar Código') {
             steps {
-                git branch: 'main', url: 'https://github.com/tu-usuario/node-jenkins-pipeline.git'
+                git branch: 'main', url: 'https://github.com/glomarperu/jenkins-pipeline.git'
             }
         }
         stage('Instalar Dependencias') {
