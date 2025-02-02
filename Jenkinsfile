@@ -1,10 +1,11 @@
 pipeline {
     agent any
     environment {
-        PATH = "$PATH:/usr/local/bin"  // Asegura que Node.js esté en el PATH
+        PATH = "$PATH:/usr/local/bin"
+        DOCKER_HOST = "tcp://localhost:2375"  // 🔥 Agrega esta línea
     }
     tools {
-        nodejs 'NodeJS'  // Usa la configuración creada en Global Tool Configuration
+        nodejs 'NodeJS'
     }
     stages {
         stage('Clonar Código') {
@@ -14,7 +15,7 @@ pipeline {
         }
         stage('Instalar Dependencias') {
             steps {
-                sh 'node -v'   // Verifica versión de Node.js
+                sh 'node -v'
                 sh 'npm install'
             }
         }
@@ -25,12 +26,12 @@ pipeline {
         }
         stage('Construir Imagen Docker') {
             steps {
-                sh 'docker build -t node-jenkins-app .'
+                sh 'docker -H tcp://localhost:2375 build -t node-jenkins-app .'  // 🔥 Fuerza la conexión con `-H`
             }
         }
         stage('Ejecutar Contenedor') {
             steps {
-                sh 'docker run -d -p 3000:3000 node-jenkins-app'
+                sh 'docker -H tcp://localhost:2375 run -d -p 3000:3000 node-jenkins-app'  // 🔥 Igual aquí
             }
         }
     }
