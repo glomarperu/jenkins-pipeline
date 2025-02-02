@@ -1,7 +1,10 @@
 pipeline {
     agent any
+    environment {
+        PATH = "$PATH:/usr/local/bin"  // Asegura que Node.js esté en el PATH
+    }
     tools {
-        nodejs 'NodeJS'  // Asegura que Jenkins use Node.js
+        nodejs 'NodeJS'  // Usa la configuración creada en Global Tool Configuration
     }
     stages {
         stage('Clonar Código') {
@@ -11,6 +14,7 @@ pipeline {
         }
         stage('Instalar Dependencias') {
             steps {
+                sh 'node -v'   // Verifica versión de Node.js
                 sh 'npm install'
             }
         }
